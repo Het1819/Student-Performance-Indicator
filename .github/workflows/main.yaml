@@ -34,9 +34,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Utilities
-        run:
+        run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,7 +55,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
-        run:
+        run: |
           # Build a docker container and 
           # push it to ECR so that it can
           # be deployed to ECR.
@@ -95,4 +96,3 @@ jobs:
       - name: Clean previous image and containes
         run: |
           docker system prune -f
-          
